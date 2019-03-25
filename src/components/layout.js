@@ -11,6 +11,7 @@ import { StaticQuery, graphql } from "gatsby"
 
 import Header from "./header"
 import "./layout.css"
+import FeedbackWidget from "./feedback-widget/feedback-widget"
 
 const Layout = ({ children }) => (
   <StaticQuery
@@ -34,7 +35,10 @@ const Layout = ({ children }) => (
             paddingTop: 0,
           }}
         >
-          <main>{children}</main>
+          <main>
+            {children}
+            <FeedbackWidget />
+          </main>
           <footer>
             © {new Date().getFullYear()}, Built with
             {` `}
