@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from "react"
 import { css } from "@emotion/core"
 import styled from "@emotion/styled"
 import RatingOption from "./rating-option"
+import { post } from "axios"
 
 const buttonStyles = css`
   background: rebeccapurple;
@@ -22,19 +23,6 @@ const OpenButton = styled("button")`
   bottom: 1rem;
   right: 1rem;
   ${buttonStyles};
-`
-
-const widgetStyles = css`
-  background-color: white;
-  border: 1px solid #ddd;
-  border-radius: 0.5rem;
-  bottom: 4rem;
-  font-family: sans-serif;
-  padding: 1rem;
-  position: fixed;
-  right: 1rem;
-  width: 300px;
-  z-index: 2;
 `
 
 const WidgetWrapper = styled("div")`
@@ -107,6 +95,7 @@ const FeedbackWidget = () => {
   const widgetTitle = useRef(null)
   const successTitle = useRef(null)
   const openButton = useRef(null)
+  const [activated, setActivated] = useState(false)
   const [hideWidget, setHideWidget] = useState(true)
   const [rating, setRating] = useState(2)
   const [comment, setComment] = useState("")
@@ -122,23 +111,39 @@ const FeedbackWidget = () => {
     setComment(safeComment)
   }
 
-  const handleSubmit = event => {
+  const handleSubmit = async event => {
     event.preventDefault()
 
-    console.log({
-      rating,
-      comment,
-      originUrl: window.location.href,
-    })
+    // Build a GraphQL request so we don’t need to set up Apollo server
+    const payload = {
+      variables: {
+        rating,
+        comment,
+        url: window.location.href,
+      },
+      query: `
+        mutation submit($rating: Int!, $url: String!, $comment: String) {
+          submitFeedback(input: {
+            rating: $rating,
+            originUrl: $url,
+            comment: $comment
+          })
+        }
+      `,
+    }
 
-    // TODO actually submit form
-
-    setHideWidget(true)
-    setIsSubmitted(true)
+    // TODO set a loading state
+    post(process.env.GATSBY_FEEDBACK_ENDPOINT, payload)
+      .then(() => {
+        setHideWidget(true)
+        setIsSubmitted(true)
+      })
+      .catch(err => console.log(err))
   }
 
   const handleOpen = event => {
     event.preventDefault()
+    setActivated(true)
     setHideWidget(false)
   }
 
@@ -158,20 +163,22 @@ const FeedbackWidget = () => {
   }
 
   useEffect(() => {
+    if (!activated) {
+      return
+    }
+
     if (hideWidget === false) {
       widgetTitle.current.focus()
-    } else {
-      openButton.current.focus()
+      return
     }
-  }, [hideWidget])
 
-  useEffect(() => {
     if (isSubmitted === true) {
       successTitle.current.focus()
-    } else {
-      openButton.current.focus()
+      return
     }
-  }, [isSubmitted])
+
+    openButton.current.focus()
+  }, [hideWidget, isSubmitted, activated])
 
   return (
     <React.Fragment>
