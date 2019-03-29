@@ -9,7 +9,6 @@ const buttonStyles = css`
   border-radius: 0.5rem;
   box-shadow: 1px 1px 6px #33333344;
   color: white;
-  display: block;
   font-size: 14px;
   font-family: sans-serif;
   padding: 0.25rem 0.5rem;
@@ -18,6 +17,7 @@ const buttonStyles = css`
 `
 
 const OpenButton = styled("button")`
+  display: block;
   position: fixed;
   bottom: 1rem;
   right: 1rem;
@@ -71,6 +71,7 @@ const Textarea = styled("textarea")`
 
 const SubmitButton = styled("button")`
   ${buttonStyles};
+  margin-right: 0.5rem;
 `
 
 const srOnly = css`
@@ -87,14 +88,12 @@ const srOnly = css`
 
 const CloseButton = styled("button")`
   ${buttonStyles};
-  background: transparent;
+  background: #ddd;
   box-shadow: none;
-  color: blue;
-  cursor: pointer;
-  text-decoration: underline;
+  color: inherit;
+  margin: 0.5rem 0;
 `
-
-const CloseButtonText = styled("span")`
+const ScreenReaderText = styled("span")`
   ${srOnly};
 `
 
@@ -227,10 +226,7 @@ const FeedbackWidget = () => {
           </TextareaLabel>
           <SubmitButton type="submit">Submit</SubmitButton>
           <CloseButton onClick={handleClose}>
-            <span aria-hidden="true">&times;</span>
-            <CloseButtonText className="sr-only">
-              close this widget
-            </CloseButtonText>
+              Close <ScreenReaderText className="sr-only">this widget</ScreenReaderText>
           </CloseButton>
         </form>
       </WidgetWrapper>
@@ -243,7 +239,7 @@ const FeedbackWidget = () => {
           Thanks for your feedback!
         </h2>
         <p>Your ratings and comments can help make Gatsby even better.</p>
-        <button className="dismiss">Dismiss</button>
+        <CloseButton className="dismiss">Dismiss</CloseButton>
       </WidgetWrapper>
     </React.Fragment>
   )
