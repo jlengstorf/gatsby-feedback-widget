@@ -173,7 +173,7 @@ const FeedbackWidget = () => {
         Was this doc helpful to you?
       </OpenButton>
       <WidgetWrapper
-        className="feedback-widget"
+        id="feedback-widget"
         hidden={hideWidget}
         onKeyDown={handleEscapeKey}
       >
