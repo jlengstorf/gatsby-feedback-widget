@@ -125,7 +125,9 @@ const FeedbackWidget = () => {
 
   const handleOpen = event => {
     event.preventDefault()
-    setHideWidget(false)
+    if (hideWidget && !isSubmitted) {
+      setHideWidget(false)
+    }
   }
 
   const handleClose = event => {
