@@ -7,6 +7,7 @@
   "dependencies": {
     "@emotion/core": "^10.0.10",
     "@emotion/styled": "^10.0.10",
+    "axios": "^0.18.0",
     "gatsby": "^2.2.10",
     "gatsby-image": "^2.0.34",
     "gatsby-plugin-manifest": "^2.0.24",

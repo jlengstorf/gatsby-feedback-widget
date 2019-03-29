@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from "react"
 import { css } from "@emotion/core"
 import styled from "@emotion/styled"
 import RatingOption from "./rating-option"
+import { post } from "axios"
 
 const buttonStyles = css`
   background: rebeccapurple;
@@ -93,6 +94,7 @@ const FeedbackWidget = () => {
   const widgetTitle = useRef(null)
   const successTitle = useRef(null)
   const openButton = useRef(null)
+  const [activated, setActivated] = useState(false)
   const [hideWidget, setHideWidget] = useState(true)
   const [rating, setRating] = useState(2)
   const [comment, setComment] = useState("")
@@ -108,23 +110,40 @@ const FeedbackWidget = () => {
     setComment(safeComment)
   }
 
-  const handleSubmit = event => {
+  const handleSubmit = async event => {
     event.preventDefault()
 
-    console.log({
-      rating,
-      comment,
-      originUrl: window.location.href,
-    })
+    // Build a GraphQL request so we don’t need to set up Apollo server
+    const payload = {
+      variables: {
+        rating,
+        comment,
+        url: window.location.href,
+      },
+      query: `
+        mutation submit($rating: Int!, $url: String!, $comment: String) {
+          submitFeedback(input: {
+            rating: $rating,
+            originUrl: $url,
+            comment: $comment
+          })
+        }
+      `,
+    }
 
-    // TODO actually submit form
-
-    setHideWidget(true)
-    setIsSubmitted(true)
+    // TODO set a loading state
+    post(process.env.GATSBY_FEEDBACK_ENDPOINT, payload)
+      .then(() => {
+        setHideWidget(true)
+        setIsSubmitted(true)
+      })
+      .catch(err => console.error(err))
   }
 
   const handleOpen = event => {
     event.preventDefault()
+    setActivated(true)
+    
     if (hideWidget && !isSubmitted) {
       setHideWidget(false)
     }
@@ -146,20 +165,22 @@ const FeedbackWidget = () => {
   }
 
   useEffect(() => {
+    if (!activated) {
+      return
+    }
+
     if (hideWidget === false) {
       widgetTitle.current.focus()
-    } else {
-      openButton.current.focus()
+      return
     }
-  }, [hideWidget])
 
-  useEffect(() => {
     if (isSubmitted === true) {
       successTitle.current.focus()
-    } else {
-      openButton.current.focus()
+      return
     }
-  }, [isSubmitted])
+
+    openButton.current.focus()
+  }, [hideWidget, isSubmitted, activated])
 
   return (
     <React.Fragment>
