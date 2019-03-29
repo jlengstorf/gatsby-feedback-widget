@@ -24,19 +24,6 @@ const OpenButton = styled("button")`
   ${buttonStyles};
 `
 
-const widgetStyles = css`
-  background-color: white;
-  border: 1px solid #ddd;
-  border-radius: 0.5rem;
-  bottom: 4rem;
-  font-family: sans-serif;
-  padding: 1rem;
-  position: fixed;
-  right: 1rem;
-  width: 300px;
-  z-index: 2;
-`
-
 const WidgetWrapper = styled("div")`
   background-color: white;
   border: 1px solid #ddd;
