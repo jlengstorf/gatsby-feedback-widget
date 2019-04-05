@@ -5,7 +5,6 @@ import { useMachine } from "@xstate/react"
 import { OpenButton } from "./buttons"
 import FeedbackForm from "./feedback-form"
 import SubmitSuccess from "./submit-success"
-import SubmitPending from "./submit-pending"
 import SubmitError from "./submit-error"
 
 const postFeedback = ({ rating, comment }) => {
@@ -146,7 +145,7 @@ const FeedbackWidget = () => {
       >
         Was this doc helpful to you?
       </OpenButton>
-      {current.matches("opened") && (
+      {(current.matches("opened") || current.matches("submitting")) && (
         <FeedbackForm
           handleClose={handleClose}
           handleSubmit={handleSubmit}
@@ -155,9 +154,9 @@ const FeedbackWidget = () => {
           titleRef={widgetTitle}
           rating={rating}
           comment={comment}
+          submitting={current.matches("submitting")}
         />
       )}
-      {current.matches("submitting") && <SubmitPending />}
       {current.matches("failed") && <SubmitError handleClose={handleClose} />}
       {current.matches("success") && (
         <SubmitSuccess handleClose={handleClose} titleRef={successTitle} />
