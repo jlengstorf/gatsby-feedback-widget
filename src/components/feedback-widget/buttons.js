@@ -12,6 +12,10 @@ const buttonStyles = css`
   padding: 0.25rem 0.5rem;
   z-index: 1;
   -webkit-appearance: none;
+
+  &:disabled {
+    opacity: 0.5;
+  }
 `
 
 export const OpenButton = styled("button")`
