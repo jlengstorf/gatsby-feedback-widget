@@ -43,6 +43,12 @@ const Form = styled("form")`
       animation-delay: -500ms;
     }
   }
+  @media screen and (prefers-reduced-motion: reduce) {
+    &.submitting::before,
+    &.submitting::after {
+      display: none;
+    }
+  }
 `
 
 const Fieldset = styled("fieldset")`

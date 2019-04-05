@@ -1,7 +1,8 @@
 /** @jsx jsx */
-import { css, jsx } from "@emotion/core"
+import { jsx } from "@emotion/core"
+import styled from "@emotion/styled"
 
-const wrapperStyles = css`
+const WrapperDiv = styled(`div`)`
   background-color: white;
   border: 1px solid #ddd;
   border-radius: 0.5rem;
@@ -12,6 +13,10 @@ const wrapperStyles = css`
   right: 1rem;
   width: 300px;
   z-index: 2;
+
+  [tabindex="-1"]:focus {
+    outline: none;
+  }
 `
 
 const WidgetWrapper = ({ children, handleClose = () => {} }) => {
@@ -22,9 +27,9 @@ const WidgetWrapper = ({ children, handleClose = () => {} }) => {
   }
 
   return (
-    <div css={wrapperStyles} onKeyDown={handleEscapeKey}>
+    <WrapperDiv onKeyDown={handleEscapeKey}>
       {children}
-    </div>
+    </WrapperDiv>
   )
 }
 
