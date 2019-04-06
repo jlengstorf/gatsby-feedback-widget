@@ -40,7 +40,8 @@ const feedbackMachine = Machine({
       onEntry: "focusWidgetTitle",
       on: {
         RATE: {
-          actions: assign({ rating: (_ctx, e) => e.value }),
+          // Assign the RATE event value to the rating context
+          actions: assign({ rating: (_context, event) => event.value }),
         },
         COMMENT: {
           actions: assign({ comment: (_ctx, e) => e.value }),
