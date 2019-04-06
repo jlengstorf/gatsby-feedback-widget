@@ -1130,6 +1130,13 @@
     "@webassemblyjs/wast-parser" "1.7.11"
     "@xtuc/long" "4.2.1"
 
+"@xstate/react@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@xstate/react/-/react-0.2.0.tgz#3332a9b2b031278da20705ea9533dee5a9a6c372"
+  integrity sha512-ECBqknnibDc01JeC+ftz0NGAQkIyT0ZM9Zk/t+haYNItAaQamDjeG6qG47j3V59VZZYpRTPYrxmmoPyDfaNSJg==
+  dependencies:
+    xstate "^4.4.0"
+
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@xtuc/ieee754/-/ieee754-1.2.0.tgz#eef014a3145ae477a1cbc00cd1e552336dceb790"
@@ -11124,6 +11131,11 @@ xstate@^4.3.2:
   version "4.3.3"
   resolved "https://registry.yarnpkg.com/xstate/-/xstate-4.3.3.tgz#e7712aa48285c8900cd62020953313a0aac8d82e"
   integrity sha512-63os3bXeN0oaEsYwtHuqR6N71m6Ro/dZpVNgef9vez7skeabbaVh5hOCVLXPwZqQ9QLUlxAQuc38wlsIibdFkw==
+
+xstate@^4.4.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/xstate/-/xstate-4.4.0.tgz#0daedbdc49313357413546de04fafa0dba7aa0ce"
+  integrity sha512-MS638X5zCzEAZA/UOW9fUHSg4xAGfiHFkGMjtU5j/gmb1PtGBAVImv0iWqRZNwVqTALxxtQz655BVyNSNz2ThA==
 
 xtend@^4.0.0, xtend@~4.0.1:
   version "4.0.1"

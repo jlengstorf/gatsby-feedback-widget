@@ -7,6 +7,7 @@
   "dependencies": {
     "@emotion/core": "^10.0.10",
     "@emotion/styled": "^10.0.10",
+    "@xstate/react": "^0.2.0",
     "axios": "^0.18.0",
     "gatsby": "^2.2.10",
     "gatsby-image": "^2.0.34",
@@ -19,7 +20,8 @@
     "prop-types": "^15.7.2",
     "react": "^16.8.5",
     "react-dom": "^16.8.5",
-    "react-helmet": "^5.2.0"
+    "react-helmet": "^5.2.0",
+    "xstate": "^4.4.0"
   },
   "devDependencies": {
     "prettier": "^1.16.4"
