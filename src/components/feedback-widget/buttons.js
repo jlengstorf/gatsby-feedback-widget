@@ -1,17 +1,32 @@
 import { css } from "@emotion/core"
 import styled from "@emotion/styled"
 
+export const focusStyle = css`
+  box-shadow: 0 0 0 0.12rem #ffb238;
+  outline: none;
+`
+
 const buttonStyles = css`
+  align-items: center;
   background: rebeccapurple;
   border: none;
-  border-radius: 0.5rem;
-  box-shadow: 1px 1px 6px #33333344;
+  border-radius: 2px;
   color: white;
-  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  font-size: 0.875rem;
   font-family: sans-serif;
-  padding: 0.25rem 0.5rem;
+  padding: 0.3rem 0.75rem;
   z-index: 1;
   -webkit-appearance: none;
+
+  svg {
+    margin-left: 0.5rem;
+  }
+
+  &:focus {
+    ${focusStyle}
+  }
 
   &:disabled {
     opacity: 0.5;
@@ -28,13 +43,11 @@ export const OpenButton = styled("button")`
 
 export const SubmitButton = styled("button")`
   ${buttonStyles};
-  margin-right: 0.5rem;
 `
 
 export const CloseButton = styled("button")`
   ${buttonStyles};
-  background: #ddd;
-  box-shadow: none;
-  color: inherit;
-  margin: 0.5rem 0;
+  background: #fff;
+  border: 1px solid rebeccapurple;
+  color: rebeccapurple;
 `

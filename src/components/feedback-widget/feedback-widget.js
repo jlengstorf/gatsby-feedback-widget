@@ -135,6 +135,8 @@ const FeedbackWidget = () => {
   const handleOpen = () => send("OPEN")
   const handleClose = () => send("CLOSE")
 
+  console.log("widgetTitle", widgetTitle)
+
   return (
     <React.Fragment>
       <OpenButton
