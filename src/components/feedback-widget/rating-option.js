@@ -51,9 +51,9 @@ const IconWrapper = styled(`span`)`
   width: 3rem;
 
   svg {
+    color: #8a4baf;
     height: 100%;
     width: 100%;
-    color: #8a4baf;
   }
 `
 
@@ -70,13 +70,13 @@ const RatingText = styled("span")`
 const Label = styled("label")`
   align-items: center;
   background: #f6edfa;
+  cursor: pointer;
   display: flex;
   flex-basis: 33.33%;
   flex-direction: column;
   justify-content: center;
   height: 5.5rem;
   text-align: center;
-  cursor: pointer;
   transition: background 0.25s;
 
   &.focused {
@@ -90,30 +90,36 @@ const Label = styled("label")`
     }
   }
 
-  &:hover {
-    &:nth-of-type(1) {
-      ${IconWrapper} {
-        transform: translateY(3.7rem);
+  fieldset[disabled] & {
+    cursor: not-allowed;
+  }
 
-        svg {
-          animation: ${animC} 3s ease infinite;
+  fieldset:not([disabled]) & {
+    &:hover {
+      &:nth-of-type(1) {
+        ${IconWrapper} {
+          transform: translateY(3.7rem);
+
+          svg {
+            animation: ${animC} 3s ease infinite;
+          }
+        }
+
+        ${RatingText} {
+          transform: translateY(-1.6rem);
         }
       }
 
-      ${RatingText} {
-        transform: translateY(-1.6rem);
+      &:nth-of-type(2) {
+        ${IconWrapper} {
+          animation: ${animB} ease-in-out 0.8s infinite;
+        }
       }
-    }
 
-    &:nth-of-type(2) {
-      ${IconWrapper} {
-        animation: ${animB} ease-in-out 0.8s infinite;
-      }
-    }
-
-    &:nth-of-type(3) {
-      ${IconWrapper} {
-        animation: ${animA} 1.2s infinite;
+      &:nth-of-type(3) {
+        ${IconWrapper} {
+          animation: ${animA} 1.2s infinite;
+        }
       }
     }
   }
@@ -127,8 +133,7 @@ const Input = styled("input")`
 `
 
 const RatingOption = ({
-  emojiLabel,
-  emoji,
+  iconLabel,
   ratingText,
   ratingValue,
   checked,
@@ -138,7 +143,7 @@ const RatingOption = ({
   return (
     <Label className={checked ? "focused" : null}>
       <IconWrapper>
-        <Icon aria-label={emojiLabel} />
+        <Icon aria-label={iconLabel} />
       </IconWrapper>
       <RatingText className="level">{ratingText}</RatingText>
       <Input

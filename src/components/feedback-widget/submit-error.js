@@ -1,14 +1,23 @@
 import React from "react"
 import WidgetWrapper from "./widget-wrapper"
 import { CloseButton } from "./buttons"
-import ScreenReaderText from "./screen-reader-text"
+import { Actions, ScreenReaderText, Title } from "./styled-elements"
+import { SubmitButton } from "./buttons"
+import { MdArrowForward } from "react-icons/md"
 
-const SubmitError = ({ handleClose }) => (
+const SubmitError = ({ handleClose, handleOpen }) => (
   <WidgetWrapper className="feedback-success" handleClose={handleClose}>
+    <Title>Ups!</Title>
     <p>Something went wrong. Please try again.</p>
-    <CloseButton onClick={handleClose}>
-      Close <ScreenReaderText className="sr-only">this widget</ScreenReaderText>
-    </CloseButton>
+    <Actions>
+      <CloseButton onClick={handleClose}>
+        Cancel{" "}
+        <ScreenReaderText className="sr-only">this widget</ScreenReaderText>
+      </CloseButton>
+      <SubmitButton onClick={handleOpen}>
+        Try Again <MdArrowForward />
+      </SubmitButton>
+    </Actions>
   </WidgetWrapper>
 )
 

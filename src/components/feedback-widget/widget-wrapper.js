@@ -1,21 +1,54 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core"
 import styled from "@emotion/styled"
+import { keyframes } from "@emotion/core"
+
+const boldEntry = keyframes`
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+`
+
+const opacityEntry = keyframes`
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+`
 
 const WrapperDiv = styled(`div`)`
   background-color: white;
   border: 1px solid #ddd;
-  border-radius: 0.5rem;
-  bottom: 4rem;
+  border-radius: 0.3rem;
+  box-shadow: rgba(46, 41, 51, 0.08) 0px 4px 8px,
+    rgba(71, 63, 79, 0.16) 0px 8px 16px;
   font-family: sans-serif;
-  padding: 1rem;
-  position: fixed;
-  right: 1rem;
-  width: 300px;
+  height: 100%;
+  opacity: 0.5;
+  overflow-y: auto;
+  padding: 2rem 1.75rem 0;
+  transform: scale(0);
+  transform-origin: top center;
+  width: 100%;
   z-index: 2;
 
   [tabindex="-1"]:focus {
     outline: none;
+  }
+
+  .opened & {
+    animation: ${boldEntry} 0.5s ease forwards;
+  }
+
+  .failed &,
+  .success &,
+  .submitting & {
+    animation: ${opacityEntry} 0.5s ease forwards;
   }
 `
 
@@ -26,11 +59,7 @@ const WidgetWrapper = ({ children, handleClose = () => {} }) => {
     }
   }
 
-  return (
-    <WrapperDiv onKeyDown={handleEscapeKey}>
-      {children}
-    </WrapperDiv>
-  )
+  return <WrapperDiv onKeyDown={handleEscapeKey}>{children}</WrapperDiv>
 }
 
 export default WidgetWrapper

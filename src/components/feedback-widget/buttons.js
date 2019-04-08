@@ -1,5 +1,13 @@
 import { css } from "@emotion/core"
 import styled from "@emotion/styled"
+import { keyframes } from "@emotion/core"
+import { breakpoints } from "./presets"
+
+const rotation = keyframes`
+  100% {
+    transform: translateX(0.25rem) rotate(360deg);
+  }
+`
 
 export const focusStyle = css`
   box-shadow: 0 0 0 0.12rem #ffb238;
@@ -7,6 +15,7 @@ export const focusStyle = css`
 `
 
 const buttonStyles = css`
+  -webkit-appearance: none;
   align-items: center;
   background: rebeccapurple;
   border: none;
@@ -17,11 +26,13 @@ const buttonStyles = css`
   font-size: 0.875rem;
   font-family: sans-serif;
   padding: 0.3rem 0.75rem;
+  transition: 0.5s;
   z-index: 1;
-  -webkit-appearance: none;
 
   svg {
-    margin-left: 0.5rem;
+    height: 1.1rem;
+    transform: translateX(0.25rem);
+    width: 1.1rem;
   }
 
   &:focus {
@@ -29,20 +40,23 @@ const buttonStyles = css`
   }
 
   &:disabled {
-    opacity: 0.5;
+    cursor: not-allowed;
+    opacity: 0.9;
   }
-`
 
-export const OpenButton = styled("button")`
-  ${buttonStyles};
-  display: block;
-  position: fixed;
-  bottom: 1rem;
-  right: 1rem;
+  &:hover {
+    box-shadow: 0 0 0 0.12rem #ffb23888;
+  }
 `
 
 export const SubmitButton = styled("button")`
   ${buttonStyles};
+
+  .submitting & {
+    svg {
+      animation: ${rotation} 1s linear infinite;
+    }
+  }
 `
 
 export const CloseButton = styled("button")`
@@ -50,4 +64,106 @@ export const CloseButton = styled("button")`
   background: #fff;
   border: 1px solid rebeccapurple;
   color: rebeccapurple;
+`
+
+export const ToggleButtonLabel = styled(`span`)`
+  align-items: center;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  display: flex;
+  height: 2.5rem;
+  padding: 0 2.5rem 0 0.75rem;
+  transition: 0.5s;
+  white-space: nowrap;
+`
+
+export const ToggleButtonIcon = styled(`span`)`
+  align-items: center;
+  background: rebeccapurple;
+  border-radius: 50%;
+  color: #fff;
+  display: flex;
+  font-size: 1rem;
+  height: 1.4rem;
+  justify-content: center;
+  position: absolute;
+  right: 0.75rem;
+  transform: scale(1);
+  transition: 0.5s;
+  width: 1.4rem;
+
+  svg {
+    fill: #fff;
+    height: 0.8rem;
+    width: 0.8rem;
+    transition: 0.5s;
+  }
+
+  .opened &,
+  .failed &,
+  .success &,
+  .submitting & {
+    &:hover {
+      svg {
+        transform: rotate(90deg);
+        fill: #ffb238;
+      }
+    }
+  }
+`
+
+export const ToggleButton = styled("button")`
+  align-items: center;
+  background: none;
+  border: none;
+  bottom: 0;
+  position: absolute;
+  right: 0;
+  cursor: pointer;
+  display: flex;
+  padding: 0;
+
+  transition: 0.6s ease;
+  z-index: 3;
+
+  &:hover {
+    ${ToggleButtonLabel} {
+      box-shadow: 0 0 0 0.12rem #ffb23888;
+    }
+  }
+
+  &:focus {
+    outline: none;
+
+    ${ToggleButtonLabel} {
+      ${focusStyle}
+    }
+  }
+
+  .opened &,
+  .failed &,
+  .success &,
+  .submitting & {
+    transform: translate(-0.5rem, -26rem);
+
+    ${ToggleButtonIcon} {
+      background: #fff;
+      border: 1px solid #ddd;
+      transform: scale(1.8);
+
+      svg {
+        fill: rebeccapurple;
+      }
+    }
+
+    &:focus {
+      ${ToggleButtonIcon} {
+        ${focusStyle};
+      }
+    }
+  }
+
+  @media (min-width: ${breakpoints.desktop}) {
+  }
 `

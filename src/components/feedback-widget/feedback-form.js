@@ -1,36 +1,38 @@
-import React from "react"
+import React, { Fragment } from "react"
 import { keyframes } from "@emotion/core"
 import styled from "@emotion/styled"
 import WidgetWrapper from "./widget-wrapper"
 import { SubmitButton, CloseButton, focusStyle } from "./buttons"
-import ScreenReaderText from "./screen-reader-text"
+import { Actions, Title, ScreenReaderText } from "./styled-elements"
 import RatingOption from "./rating-option"
 import {
   MdSentimentDissatisfied,
   MdSentimentNeutral,
   MdSentimentVerySatisfied,
+  MdSend,
+  MdRefresh,
 } from "react-icons/md"
 
-const loading = keyframes`
-  from {
-    opacity: 1;
-    transform: scale(0.01);
-  }
+// const loading = keyframes`
+//   from {
+//     opacity: 1;
+//     transform: scale(0.01);
+//   }
 
-  30% {
-    opacity: 1;
-  }
+//   30% {
+//     opacity: 1;
+//   }
 
-  to {
-    opacity: 0;
-    transform: scale(1);
-  }
-`
+//   to {
+//     opacity: 0;
+//     transform: scale(1);
+//   }
+// `
 
 const Form = styled("form")`
   margin-bottom: 0;
 
-  &.submitting {
+  ${"" /* &.submitting {
     position: relative;
 
     ::before,
@@ -55,26 +57,13 @@ const Form = styled("form")`
     &.submitting::after {
       display: none;
     }
-  }
-`
-const Title = styled(`h2`)`
-  display: block;
-  font-size: 1.2rem;
-  letter-spacing: -0.01em;
-  line-height: 1.2;
-  margin: 0;
-  margin-bottom: 0.5rem;
-  text-align: center;
+  } */}
 `
 
 const Fieldset = styled("fieldset")`
   border: 0;
   margin: 0 0 1rem;
   padding: 0;
-
-  &:disabled {
-    opacity: 0.5;
-  }
 `
 
 const Legend = styled(`legend`)`
@@ -86,19 +75,22 @@ const Legend = styled(`legend`)`
 `
 
 const Rating = styled(`div`)`
+  align-content: stretch;
   border: 3px solid #8a4baf;
   border-radius: 8px;
   display: flex;
   flex: 1 1 auto;
   justify-content: stretch;
-  align-content: stretch;
   overflow: hidden;
-  width: 99.99%;
   transition: 0.5s;
-  background: red;
+  width: 99.99%;
 
   &:focus-within {
     ${focusStyle}
+  }
+
+  [disabled] & {
+    opacity: 0.75;
   }
 `
 
@@ -109,21 +101,18 @@ const TextareaLabel = styled("label")`
   span {
     font-weight: normal;
   }
-
-  &.disabled {
-    opacity: 0.5;
-  }
 `
 
 const Textarea = styled("textarea")`
   border: 1px solid #999;
+  border-radius: 4px;
   color: #333;
   display: block;
   font-weight: normal;
   height: 100px;
   margin: 0.25rem 0 1rem;
-  border-radius: 4px;
   padding: 0.25rem 0.5rem;
+  transition: 0.5s;
   width: 99%;
 
   &:focus {
@@ -131,14 +120,9 @@ const Textarea = styled("textarea")`
   }
 
   &:disabled {
-    opacity: 0.5;
+    cursor: not-allowed;
+    opacity: 0.75;
   }
-`
-
-const Actions = styled(`div`)`
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
 `
 
 const FeedbackForm = ({
@@ -150,66 +134,78 @@ const FeedbackForm = ({
   rating,
   comment,
   submitting,
-}) => (
-  <WidgetWrapper id="feedback-widget" handleClose={handleClose}>
-    <Form
-      onSubmit={handleSubmit}
-      className={`${submitting ? "submitting" : ""}`}
-    >
-      <Title>Was this doc helpful to you?</Title>
-      <Fieldset className="ratings" disabled={submitting}>
-        <Legend ref={titleRef} tabIndex="-1">
-          Rate your experience
-        </Legend>
-        <Rating>
-          <RatingOption
-            emojiLabel="frowning face"
-            emoji="🙁"
-            icon={MdSentimentDissatisfied}
-            ratingText="poor"
-            ratingValue="1"
-            checked={rating === 1}
-            handleChange={handleChange}
+}) => {
+  return (
+    <WidgetWrapper id="feedback-widget" handleClose={handleClose}>
+      <Form
+        onSubmit={handleSubmit}
+        className={`${submitting ? "submitting" : ""}`}
+      >
+        <Title>Was this doc helpful to you?</Title>
+        <Fieldset className="ratings" disabled={submitting}>
+          <Legend ref={titleRef} tabIndex="-1">
+            Rate your experience
+          </Legend>
+          <Rating>
+            <RatingOption
+              iconLabel="frowning face"
+              icon={MdSentimentDissatisfied}
+              ratingText="poor"
+              ratingValue="1"
+              checked={rating === 1}
+              handleChange={handleChange}
+            />
+            <RatingOption
+              iconLabel="neutral face"
+              icon={MdSentimentNeutral}
+              ratingText="fine"
+              ratingValue="2"
+              checked={rating === 2}
+              handleChange={handleChange}
+            />
+            <RatingOption
+              iconLabel="smiling face"
+              icon={MdSentimentVerySatisfied}
+              ratingText="great"
+              ratingValue="3"
+              checked={rating === 3}
+              handleChange={handleChange}
+            />
+          </Rating>
+        </Fieldset>
+        <TextareaLabel className={`textarea ${submitting ? "disabled" : ""}`}>
+          Your comments <span>(optional):</span>
+          <Textarea
+            value={comment}
+            onChange={handleCommentChange}
+            disabled={submitting}
           />
-          <RatingOption
-            emojiLabel="neutral face"
-            emoji="😐"
-            icon={MdSentimentNeutral}
-            ratingText="fine"
-            ratingValue="2"
-            checked={rating === 2}
-            handleChange={handleChange}
-          />
-          <RatingOption
-            emojiLabel="smiling face"
-            emoji="😄"
-            icon={MdSentimentVerySatisfied}
-            ratingText="great"
-            ratingValue="3"
-            checked={rating === 3}
-            handleChange={handleChange}
-          />
-        </Rating>
-      </Fieldset>
-      <TextareaLabel className={`textarea ${submitting ? "disabled" : ""}`}>
-        Your comments <span>(optional):</span>
-        <Textarea
-          value={comment}
-          onChange={handleCommentChange}
-          disabled={submitting}
-        />
-      </TextareaLabel>
-      <Actions>
-        <CloseButton onClick={handleClose} disabled={submitting}>
-          Close{" "}
-          <ScreenReaderText className="sr-only">this widget</ScreenReaderText>
-        </CloseButton>
-        <SubmitButton type="submit" disabled={submitting}>
-          Submit
-        </SubmitButton>
-      </Actions>
-    </Form>
-  </WidgetWrapper>
-)
+        </TextareaLabel>
+        <Actions>
+          <CloseButton onClick={handleClose} disabled={submitting}>
+            Cancel{" "}
+            <ScreenReaderText className="sr-only">this widget</ScreenReaderText>
+          </CloseButton>
+          <SubmitButton
+            type="submit"
+            className={submitting && "submitting"}
+            disabled={submitting}
+          >
+            {submitting ? (
+              <Fragment>
+                Wait, Sending <MdRefresh />
+              </Fragment>
+            ) : (
+              <Fragment>
+                Send feedback
+                <MdSend />
+              </Fragment>
+            )}
+          </SubmitButton>
+        </Actions>
+      </Form>
+    </WidgetWrapper>
+  )
+}
 
 export default FeedbackForm
