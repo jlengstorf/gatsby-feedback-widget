@@ -4,6 +4,9 @@ import { keyframes } from "@emotion/core"
 import { breakpoints } from "./presets"
 
 const rotation = keyframes`
+  0% {
+    transform: translateX(0.25rem) rotate(0deg);
+  }
   100% {
     transform: translateX(0.25rem) rotate(360deg);
   }
@@ -55,6 +58,14 @@ export const SubmitButton = styled("button")`
   .submitting & {
     svg {
       animation: ${rotation} 1s linear infinite;
+    }
+  }
+
+  @media screen and (prefers-reduced-motion: reduce) {
+    .submitting & {
+      svg {
+        animation: none;
+      }
     }
   }
 `
