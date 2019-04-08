@@ -47,6 +47,21 @@ const WrapperDiv = styled(`div`)`
     animation: ${opacityEntry} 0.5s ease forwards;
   }
 
+  @media screen and (prefers-reduced-motion: reduce) {
+    .opened & {
+      animation: none;
+      transform: scale(1);
+      opacity: 1;
+    }
+
+    .failed &,
+    .success & {
+      animation: none;
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
   .submitting & {
     transform: scale(1);
     opacity: 1;

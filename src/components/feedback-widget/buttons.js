@@ -195,4 +195,8 @@ export const ToggleButton = styled("button")`
       }
     }
   }
+
+  @media screen and (prefers-reduced-motion: reduce) {
+    transition: 0;
+  }
 `
