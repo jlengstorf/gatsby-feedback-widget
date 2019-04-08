@@ -2,6 +2,7 @@
 import { jsx } from "@emotion/core"
 import styled from "@emotion/styled"
 import { keyframes } from "@emotion/core"
+import { breakpoints } from "./presets"
 
 const boldEntry = keyframes`
   100% {
@@ -25,15 +26,11 @@ const WrapperDiv = styled(`div`)`
   background-color: white;
   border: 1px solid #ddd;
   border-radius: 0.3rem;
-  box-shadow: rgba(46, 41, 51, 0.08) 0px 4px 8px,
-    rgba(71, 63, 79, 0.16) 0px 8px 16px;
   font-family: sans-serif;
   height: 100%;
   opacity: 0.5;
   overflow-y: auto;
-  padding: 2rem 1.75rem 0;
-  transform: scale(0);
-  transform-origin: top center;
+  padding: 1.5rem 1rem;
   width: 100%;
   z-index: 2;
 
@@ -46,9 +43,22 @@ const WrapperDiv = styled(`div`)`
   }
 
   .failed &,
-  .success &,
-  .submitting & {
+  .success & {
     animation: ${opacityEntry} 0.5s ease forwards;
+  }
+
+  .submitting & {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  @media (min-width: ${breakpoints.desktop}) {
+    box-shadow: rgba(46, 41, 51, 0.08) 0px 4px 8px,
+      rgba(71, 63, 79, 0.16) 0px 8px 16px;
+    height: 100%;
+    padding: 2rem 1.75rem;
+    transform: scale(0);
+    transform-origin: top center;
   }
 `
 

@@ -1,5 +1,5 @@
 import React, { Fragment } from "react"
-import { keyframes } from "@emotion/core"
+// import { keyframes } from "@emotion/core"
 import styled from "@emotion/styled"
 import WidgetWrapper from "./widget-wrapper"
 import { SubmitButton, CloseButton, focusStyle } from "./buttons"
@@ -90,7 +90,7 @@ const Rating = styled(`div`)`
   }
 
   [disabled] & {
-    opacity: 0.75;
+    opacity: 0.5;
   }
 `
 
@@ -121,7 +121,7 @@ const Textarea = styled("textarea")`
 
   &:disabled {
     cursor: not-allowed;
-    opacity: 0.75;
+    opacity: 0.5;
   }
 `
 
@@ -193,7 +193,7 @@ const FeedbackForm = ({
           >
             {submitting ? (
               <Fragment>
-                Wait, Sending <MdRefresh />
+                Sending, wait <MdRefresh />
               </Fragment>
             ) : (
               <Fragment>

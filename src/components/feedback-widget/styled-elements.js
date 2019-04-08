@@ -4,8 +4,8 @@ import { breakpoints } from "./presets"
 export const WidgetContainer = styled(`div`)`
   height: 2.5rem;
   margin: 2rem 0;
-  position: relative;
-  background: red;
+  position: inline;
+  width: 100%;
 
   &:not(.closed) {
     height: 26rem;
@@ -20,6 +20,8 @@ export const WidgetContainer = styled(`div`)`
     bottom: 1.5rem;
     position: fixed;
     right: 1.5rem;
+    margin: 0;
+    width: auto;
   }
 `
 

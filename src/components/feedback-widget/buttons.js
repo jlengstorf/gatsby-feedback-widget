@@ -76,6 +76,11 @@ export const ToggleButtonLabel = styled(`span`)`
   padding: 0 2.5rem 0 0.75rem;
   transition: 0.5s;
   white-space: nowrap;
+  width: 100%;
+
+  @media (min-width: ${breakpoints.desktop}) {
+    width: auto;
+  }
 `
 
 export const ToggleButtonIcon = styled(`span`)`
@@ -88,7 +93,7 @@ export const ToggleButtonIcon = styled(`span`)`
   height: 1.4rem;
   justify-content: center;
   position: absolute;
-  right: 0.75rem;
+  right: 2rem;
   transform: scale(1);
   transition: 0.5s;
   width: 1.4rem;
@@ -100,14 +105,18 @@ export const ToggleButtonIcon = styled(`span`)`
     transition: 0.5s;
   }
 
-  .opened &,
-  .failed &,
-  .success &,
-  .submitting & {
-    &:hover {
-      svg {
-        transform: rotate(90deg);
-        fill: #ffb238;
+  @media (min-width: ${breakpoints.desktop}) {
+    right: 0.75rem;
+
+    .opened &,
+    .failed &,
+    .success &,
+    .submitting & {
+      &:hover {
+        svg {
+          transform: rotate(90deg);
+          fill: #ffb238;
+        }
       }
     }
   }
@@ -117,14 +126,11 @@ export const ToggleButton = styled("button")`
   align-items: center;
   background: none;
   border: none;
-  bottom: 0;
-  position: absolute;
-  right: 0;
   cursor: pointer;
   display: flex;
   padding: 0;
-
   transition: 0.6s ease;
+  width: 100%;
   z-index: 3;
 
   &:hover {
@@ -145,25 +151,37 @@ export const ToggleButton = styled("button")`
   .failed &,
   .success &,
   .submitting & {
-    transform: translate(-0.5rem, -26rem);
-
-    ${ToggleButtonIcon} {
-      background: #fff;
-      border: 1px solid #ddd;
-      transform: scale(1.8);
-
-      svg {
-        fill: rebeccapurple;
-      }
-    }
-
-    &:focus {
-      ${ToggleButtonIcon} {
-        ${focusStyle};
-      }
-    }
+    display: none;
   }
 
   @media (min-width: ${breakpoints.desktop}) {
+    bottom: 0;
+    position: absolute;
+    right: 0;
+    width: auto;
+
+    .opened &,
+    .failed &,
+    .success &,
+    .submitting & {
+      display: flex;
+      transform: translate(-0.5rem, -26rem);
+
+      ${ToggleButtonIcon} {
+        background: #fff;
+        border: 1px solid #ddd;
+        transform: scale(1.8);
+
+        svg {
+          fill: rebeccapurple;
+        }
+      }
+
+      &:focus {
+        ${ToggleButtonIcon} {
+          ${focusStyle};
+        }
+      }
+    }
   }
 `
