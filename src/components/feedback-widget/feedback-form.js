@@ -13,51 +13,8 @@ import {
   MdRefresh,
 } from "react-icons/md"
 
-// const loading = keyframes`
-//   from {
-//     opacity: 1;
-//     transform: scale(0.01);
-//   }
-
-//   30% {
-//     opacity: 1;
-//   }
-
-//   to {
-//     opacity: 0;
-//     transform: scale(1);
-//   }
-// `
-
 const Form = styled("form")`
   margin-bottom: 0;
-
-  ${"" /* &.submitting {
-    position: relative;
-
-    ::before,
-    ::after {
-      background: radial-gradient(#66339900, rebeccapurple);
-      border: 2px solid rebeccapurple;
-      border-radius: 50%;
-      content: " ";
-      height: 5rem;
-      left: calc(50% - 2.5rem);
-      position: absolute;
-      top: calc(50% - 2.5rem);
-      width: 5rem;
-      animation: ${loading} 1s ease-in infinite;
-    }
-    ::after {
-      animation-delay: -500ms;
-    }
-  }
-  @media screen and (prefers-reduced-motion: reduce) {
-    &.submitting::before,
-    &.submitting::after {
-      display: none;
-    }
-  } */}
 `
 
 const Fieldset = styled("fieldset")`
@@ -104,7 +61,7 @@ const TextareaLabel = styled("label")`
 `
 
 const Textarea = styled("textarea")`
-  border: 1px solid #999;
+  border: 1px solid #ccc;
   border-radius: 4px;
   color: #333;
   display: block;

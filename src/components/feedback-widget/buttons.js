@@ -80,7 +80,7 @@ export const CloseButton = styled("button")`
 export const ToggleButtonLabel = styled(`span`)`
   align-items: center;
   background: white;
-  border: 1px solid #ccc;
+  border: 1px solid #ddd;
   border-radius: 0.25rem;
   display: flex;
   height: 2.5rem;
@@ -184,7 +184,7 @@ export const ToggleButton = styled("button")`
 
       ${ToggleButtonIcon} {
         background: #fff;
-        border: 1px solid #ddd;
+        border: 1px solid #eee;
         transform: scale(1.8);
 
         svg {

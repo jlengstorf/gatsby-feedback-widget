@@ -24,7 +24,7 @@ const opacityEntry = keyframes`
 
 const WrapperDiv = styled(`div`)`
   background-color: white;
-  border: 1px solid #ddd;
+  border: 1px solid #eee;
   border-radius: 0.3rem;
   font-family: sans-serif;
   height: 100%;
