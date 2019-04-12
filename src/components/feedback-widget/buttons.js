@@ -131,6 +131,10 @@ export const ToggleButtonIcon = styled(`span`)`
       }
     }
   }
+
+  @media screen and (prefers-reduced-motion: reduce) {
+    transition: 0;
+  }
 `
 
 export const ToggleButton = styled("button")`
