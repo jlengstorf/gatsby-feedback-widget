@@ -1,11 +1,15 @@
-import React, { useRef } from "react"
+import React, { useRef, Fragment } from "react"
 import { post } from "axios"
 import { Machine, assign } from "xstate"
 import { useMachine } from "@xstate/react"
-import { OpenButton } from "./buttons"
+
+import { ToggleButton, ToggleButtonIcon, ToggleButtonLabel } from "./buttons"
 import FeedbackForm from "./feedback-form"
 import SubmitSuccess from "./submit-success"
 import SubmitError from "./submit-error"
+import { ScreenReaderText, WidgetContainer } from "./styled-elements"
+import { MdClose } from "react-icons/md"
+import MdQuestionMark from "./question-mark-icon"
 
 const postFeedback = ({ rating, comment }) => {
   const payload = {
@@ -63,6 +67,9 @@ const feedbackMachine = Machine({
     },
     failed: {
       // TODO can we send these events to gatsby-telemetry?
+      on: {
+        OPEN: "opened",
+      },
     },
     closed: {
       on: {
@@ -86,7 +93,7 @@ const FeedbackWidget = () => {
 
   const widgetTitle = useRef(null)
   const successTitle = useRef(null)
-  const openButton = useRef(null)
+  const toggleButton = useRef(null)
   const [current, send] = useMachine(
     feedbackMachine.withConfig({
       actions: {
@@ -102,7 +109,7 @@ const FeedbackWidget = () => {
         },
         focusOpenButton() {
           requestAnimationFrame(() => {
-            openButton.current.focus()
+            toggleButton.current.focus()
           })
         },
       },
@@ -134,18 +141,38 @@ const FeedbackWidget = () => {
 
   const handleOpen = () => send("OPEN")
   const handleClose = () => send("CLOSE")
+  const handleToggle = () => send(!current.matches("closed") ? "CLOSE" : "OPEN")
+
+  console.log(current)
 
   return (
-    <React.Fragment>
-      <OpenButton
-        ref={openButton}
+    <WidgetContainer className={current.value}>
+      <ToggleButton
+        ref={toggleButton}
         className="feedback-trigger"
         aria-haspopup="true"
         aria-controls="feedback-widget"
-        onClick={handleOpen}
+        onClick={handleToggle}
       >
-        Was this doc helpful to you?
-      </OpenButton>
+        {!current.matches("closed") ? (
+          <Fragment>
+            <ScreenReaderText>Close Rating Widget</ScreenReaderText>
+            <ToggleButtonIcon>
+              <MdClose />
+            </ToggleButtonIcon>
+          </Fragment>
+        ) : (
+          <Fragment>
+            <ToggleButtonLabel>
+              Was this doc helpful to you
+              <ScreenReaderText>?</ScreenReaderText>
+            </ToggleButtonLabel>
+            <ToggleButtonIcon>
+              <MdQuestionMark />
+            </ToggleButtonIcon>
+          </Fragment>
+        )}
+      </ToggleButton>
       {(current.matches("opened") || current.matches("submitting")) && (
         <FeedbackForm
           handleClose={handleClose}
@@ -158,11 +185,13 @@ const FeedbackWidget = () => {
           submitting={current.matches("submitting")}
         />
       )}
-      {current.matches("failed") && <SubmitError handleClose={handleClose} />}
+      {current.matches("failed") && (
+        <SubmitError handleClose={handleClose} handleOpen={handleOpen} />
+      )}
       {current.matches("success") && (
         <SubmitSuccess handleClose={handleClose} titleRef={successTitle} />
       )}
-    </React.Fragment>
+    </WidgetContainer>
   )
 }
 
