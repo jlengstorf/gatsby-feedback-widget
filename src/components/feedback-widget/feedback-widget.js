@@ -75,6 +75,7 @@ const feedbackMachine = Machine({
       on: {
         OPEN: "opened",
       },
+      onEntry: [assign({ comment: "", rating: 2 })],
     },
   },
   on: {
@@ -142,8 +143,6 @@ const FeedbackWidget = () => {
   const handleOpen = () => send("OPEN")
   const handleClose = () => send("CLOSE")
   const handleToggle = () => send(!current.matches("closed") ? "CLOSE" : "OPEN")
-
-  console.log(current)
 
   return (
     <WidgetContainer className={current.value}>
