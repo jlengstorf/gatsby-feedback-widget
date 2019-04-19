@@ -8,7 +8,7 @@ import FeedbackForm from "./feedback-form"
 import SubmitSuccess from "./submit-success"
 import SubmitError from "./submit-error"
 import { ScreenReaderText, WidgetContainer } from "./styled-elements"
-import { MdClose } from "react-icons/md"
+import MdClose from "react-icons/lib/md/close"
 import MdQuestionMark from "./question-mark-icon"
 
 const postFeedback = ({ rating, comment }) => {

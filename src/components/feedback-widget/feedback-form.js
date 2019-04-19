@@ -5,13 +5,11 @@ import WidgetWrapper from "./widget-wrapper"
 import { SubmitButton, CloseButton, focusStyle } from "./buttons"
 import { Actions, Title, ScreenReaderText } from "./styled-elements"
 import RatingOption from "./rating-option"
-import {
-  MdSentimentDissatisfied,
-  MdSentimentNeutral,
-  MdSentimentVerySatisfied,
-  MdSend,
-  MdRefresh,
-} from "react-icons/md"
+import MdSentimentDissatisfied from "react-icons/lib/md/sentiment-dissatisfied"
+import MdSentimentNeutral from "react-icons/lib/md/sentiment-neutral"
+import MdSentimentVerySatisfied from "react-icons/lib/md/sentiment-very-satisfied"
+import MdSend from "react-icons/lib/md/send"
+import MdRefresh from "react-icons/lib/md/refresh"
 
 const Form = styled("form")`
   margin-bottom: 0;
